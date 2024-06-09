@@ -47,7 +47,7 @@ export const authFunction = async (ctx: RouterContext, next: any) => {
   if(ctx.status == 401)
   {
     ctx.body = {
-      message: 'Not pass auth \nPlease login or check your username and password'
+      message: 'Not pass auth, Please login or check your username and password'
     };
    
    }

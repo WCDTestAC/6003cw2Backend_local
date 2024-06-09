@@ -89,11 +89,15 @@ const doSearch = async(ctx: any, next: any) =>{
     let password:string = body.password;
     let email:any = body.email;
     let role:string = 'user';
-    let secretkey:string = body.actiCode;
-    let secretList:string[]= ["mongkok_123456789", "mongkok_987654321","shatin_123456789","shatin_987654321","chaiwan_123456789","chaiwan_987654321" ]
-     if(secretkey)
-     {for(let i=0;i<secretList.length;i++)
-       if(secretkey==secretList[i])
+    let authCode:string = body.authCode;
+
+    let authCodeList:string[]= [
+      "tcsfamily","123456"
+    ]
+    
+     if(authCode)
+     {for(let i=0;i<authCodeList.length;i++)
+       if(authCode==authCodeList[i])
        {role='admin'
         break;
        }
@@ -138,6 +142,10 @@ const updateUser = async(ctx: any, ) =>{
   if (result) {
     ctx.status = 201
     ctx.body = `User with id ${id} updated` 
+  }else {
+    ctx.status
+    console.log(ctx.status)
+    ctx.body = "User not updated"
   } 
 }
 
