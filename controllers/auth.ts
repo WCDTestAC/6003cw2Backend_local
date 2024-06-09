@@ -2,7 +2,8 @@ import passport from "koa-passport";
 import { BasicStrategy } from "passport-http";
 import { RouterContext } from "koa-router";
 
-import * as users  from '../models/users';
+// import * as users  from '../models/users';
+import * as users from '../models/userlistmodels';
 
 const verifyPassword = (user: any, password: string) => {
   console.log('user return pwd: '+user.password);
@@ -32,21 +33,21 @@ passport.use(new BasicStrategy(async (username, password, done) => {
       console.log('done')
       done(null, {user: user});
     } else {
-      console.log(`Password incorrect for ${username}`);
+      console.log(` ${username} the password is incorrect, please try again.`);
       done(null, false);
     }
   } else {
-    console.log(`No user found with username ${username}`);
+    console.log(`The user can not found with username: ${username}`);
     done(null, false);
   }
 }));
 
-export const basicAuth = async (ctx: RouterContext, next: any) => {
+export const authFunction = async (ctx: RouterContext, next: any) => {
   await passport.authenticate("basic", { session: false })(ctx, next);
   if(ctx.status == 401)
   {
     ctx.body = {
-      message: 'you are not authorized'
+      message: 'Not pass auth \nPlease login or check your username and password'
     };
    
    }

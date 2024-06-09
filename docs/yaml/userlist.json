@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {
+    "User": {
+      "id": "/userlist",
+      "title": "UserList",
+      "description": "All User/Staff in the Canine Shelter system",
+      "type": "object",
+      "properties": {
+
+        "username": {
+          "description": "Username of Canine Shelter account",
+          "type": "string"
+        },
+        "email": {
+          "description": "email of User",
+          "type": "string"
+        },
+        "password": {
+          "description": "password of User",
+          "type": "password"
+        },
+        "role": {
+          "description": "role of User",
+          "type": "string"
+        }
+        
+      },
+      "required": ["username", "password"]
+    }
+  }
+}

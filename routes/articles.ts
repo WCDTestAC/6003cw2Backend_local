@@ -1,16 +1,25 @@
 import Router, {RouterContext} from "koa-router";
 import bodyParser from "koa-bodyparser";
-import * as model from "../models/petinfomodels";
+import * as model from "../models/articles";
 import * as likes from "../models/likes";
 import * as favs from "../models/favs";
 import * as msgs from "../models/msgs";
-import { validatePetInfo } from "../controllers/validation";
+import { validateArticle } from "../controllers/validation";
 import { authFunction } from "../controllers/auth";
 
+/*
+const articles = [
+  {title: 'Hello article', fullText: 'some text to fill the body'},
+  {title: 'another article', fullText: 'again here is some text here to fill'},
+  {title: 'coventry university', fullText: 'some news about coventry university'},
+  {title: 'smart campus', fullText: 'smart campus is coming to IVE'}
+];
+
+ */
 
 interface Post {
   id: number,
-  petname: string,
+  title: string,
   alltext:string,
   summary: string,
   imageurl: string,
@@ -23,24 +32,24 @@ interface Post {
     self: string
   }
 }
-const router:Router = new Router({prefix: '/api/v1/petinfos'});
+const router:Router = new Router({prefix: '/api/v1/articles'});
 
 const getAll = async (ctx: RouterContext, next: any) => {
-  //ctx.body = petinfos;
+  //ctx.body = articles;
 const {limit=100, page=1,  order="dateCreated", direction='ASC'} = ctx.request.query;
   const parsedLimit = parseInt(limit as string, 10);
   const parsedPage = parseInt(page as string, 10);
   const result = await model.getAll(20, 1, order, direction);
    if (result.length) {
      const body: Post[] = result.map((post: any) => {
-       const { id = 0, petname = "",  alltext="",summary = "", imageurl = "",authorid = 0,description="" }: Partial<Post> = post;
+       const { id = 0, title = "",  alltext="",summary = "", imageurl = "",authorid = 0,description="" }: Partial<Post> = post;
        const links = {
-         likes: `http://${ctx.host}/api/v1/petinfos/${post.id}/likes`,
-         fav: `http://${ctx.host}/api/v1/petinfos/${post.id}/fav`,
-         msg: `http://${ctx.host}/api/v1/petinfos/${post.id}/msg`,
-         self: `http://${ctx.host}/api/v1/petinfos/${post.id}`
+         likes: `http://${ctx.host}/api/v1/articles/${post.id}/likes`,
+         fav: `http://${ctx.host}/api/v1/articles/${post.id}/fav`,
+         msg: `http://${ctx.host}/api/v1/articles/${post.id}/msg`,
+         self: `http://${ctx.host}/api/v1/articles/${post.id}`
        };
-       return { id, petname, alltext,summary, imageurl,authorid, description, links }; // Utilizing the destructured elements
+       return { id, title,   alltext,summary, imageurl,authorid, description, links }; // Utilizing the destructured elements
      });
   ctx.body = body;
   
@@ -48,12 +57,12 @@ const {limit=100, page=1,  order="dateCreated", direction='ASC'} = ctx.request.q
       
    }
 }
-const createPetrecord = async (ctx: RouterContext, next: any) => {
+const createArticle = async (ctx: RouterContext, next: any) => {
   /*let c: any = ctx.request.body;
-  let petname = c.petname;
+  let title = c.title;
   let fullText = c.fullText;
-  let newArticle = {petname: petname, fullText: fullText};
-  petinfos.push(newArticle);
+  let newArticle = {title: title, fullText: fullText};
+  articles.push(newArticle);
   ctx.status = 201;
   ctx.body = newArticle;*/
   const body = ctx.request.body;
@@ -70,14 +79,14 @@ const createPetrecord = async (ctx: RouterContext, next: any) => {
 
 const getById = async (ctx: RouterContext, next: any) => {
   let id = +ctx.params.id;
-  /*if((id < petinfos.length +1) && (id>0)){
-    ctx.body = petinfos[id-1];
+  /*if((id < articles.length +1) && (id>0)){
+    ctx.body = articles[id-1];
   } else {
     ctx.status = 404;
   }*/
-  let petinfo = await model.getById(id);
-  if(petinfo.length) {
-    ctx.body = petinfo[0];
+  let article = await model.getById(id);
+  if(article.length) {
+    ctx.body = article[0];
      ctx.status=200;
   } else {
     ctx.status = 404;
@@ -85,18 +94,18 @@ const getById = async (ctx: RouterContext, next: any) => {
   await next();
 }
 
-const updatePetrecord = async (ctx: RouterContext, next: any) => {
+const updateArticle = async (ctx: RouterContext, next: any) => {
   let id = +ctx.params.id;
-  //let {petname, fullText} = ctx.request.body;
+  //let {title, fullText} = ctx.request.body;
   let c: any = ctx.request.body;
   /*
-  let petname = c.petname;
+  let title = c.title;
   let fullText = c.fullText;
-  if ((id < petinfos.length+1) && (id > 0)) {
-    petinfos[id-1].petname = petname;
-    petinfos[id-1].fullText = fullText;
+  if ((id < articles.length+1) && (id > 0)) {
+    articles[id-1].title = title;
+    articles[id-1].fullText = fullText;
     ctx.status = 200;    
-    ctx.body = petinfos;
+    ctx.body = articles;
   } else {
     ctx.status = 404;
   }
@@ -109,20 +118,20 @@ const updatePetrecord = async (ctx: RouterContext, next: any) => {
   await next();
 }
 
-const deletePetrecord = async (ctx: RouterContext, next: any) => {
+const deleteArticle = async (ctx: RouterContext, next: any) => {
   let id = +ctx.params.id;
  /*
-  if((id < petinfos.length+1) && (id > 0)) {
-    petinfos.splice(id-1, 1);
+  if((id < articles.length+1) && (id > 0)) {
+    articles.splice(id-1, 1);
     ctx.status = 200;
-    ctx.body = petinfos;
+    ctx.body = articles;
   } else {
     ctx.status = 404;
   }
   */
-let petinfo:any = await model.deleteById(id)
+let article:any = await model.deleteById(id)
   ctx.status=201
-  ctx.body = petinfo.affectedRows ? {message: "removed"} : {message: "error"};
+  ctx.body = article.affectedRows ? {message: "removed"} : {message: "error"};
   await next();
 }
 
@@ -209,7 +218,7 @@ async function addMsg(ctx: RouterContext, next: any){
 
 async function rmMsg(ctx: RouterContext, next: any){
   // const uid = ctx.state.user.id;
-// only admin can del petinfo comment
+// only admin can del article comment
  let b:any = ctx.request.body;
  
  const id = parseInt(ctx.params.id); 
@@ -219,10 +228,10 @@ async function rmMsg(ctx: RouterContext, next: any){
 }
 
 router.get('/', getAll);
-router.post('/', authFunction, bodyParser(), validatePetInfo, createPetrecord);
+router.post('/', authFunction, bodyParser(), validateArticle, createArticle);
 router.get('/:id([0-9]{1,})', getById);
-router.put('/:id([0-9]{1,})', authFunction, bodyParser(),validatePetInfo, updatePetrecord);
-router.delete('/:id([0-9]{1,})', authFunction, deletePetrecord);
+router.put('/:id([0-9]{1,})', authFunction, bodyParser(),validateArticle, updateArticle);
+router.delete('/:id([0-9]{1,})', authFunction, deleteArticle);
 router.get('/:id([0-9]{1,})/likes', likesCount);
 router.post('/:id([0-9]{1,})/likes', authFunction, likePost);
 router.del('/:id([0-9]{1,})/likes', authFunction, dislikePost);
