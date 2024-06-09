@@ -33,7 +33,7 @@ export const getByUserId = async  (id:number) =>{
   let query = `INSERT INTO userlist (${key}) VALUES (${parm})`
   try{
     await db.run_query(query, values)  
-    return {"status": 201}
+    return true
   } catch(error) {
     return error
   }

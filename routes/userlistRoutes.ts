@@ -81,9 +81,10 @@ const doSearch = async(ctx: any, next: any) =>{
 
   const createUser = async(ctx: any, next: any) =>{
   const body = ctx.request.body;
-    let avatarurl:string=' '
-    if(body.avatarurl)
-      avatarurl=body.avatarurl;
+  console.log("Creat user bodyPart :", body)
+    // let avatarurl:string=' '
+    // if(body.avatarurl)
+    //   avatarurl=body.avatarurl;
     let username:string= body.username;
     let password:string = body.password;
     let email:any = body.email;
@@ -98,15 +99,20 @@ const doSearch = async(ctx: any, next: any) =>{
        }
      }
     console.log("role ", role)
-    let newUser = {username: username, password: password, email: email, avatarurl: avatarurl, role: role};
+    // let newUser = {username: username, password: password, email: email, avatarurl: avatarurl, role: role};
+    let newUser = {username: username, password: password, email: email, role: role};
+
     
   let result = await model.addUser(newUser);
-  if (result) {
+  //get result information
+  
+  if (result === true) {
     ctx.status = 201;
-    ctx.body = result;
-  } else {
-    ctx.status = 201;
+    ctx.body = { status: 201 };
     ctx.body = "{message:New user created}";
+  }else {
+    ctx.status = 404;
+    ctx.body = "New user not created";
   }
 }
 
