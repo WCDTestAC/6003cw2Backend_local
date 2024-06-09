@@ -1,5 +1,5 @@
 import { RouterContext } from "koa-router";
-import * as msgs from "../models/msgs";
+import * as msgs from "../models/messagemodels";
 
 export async function addMsg(ctx: RouterContext, next: any) {
   const id = parseInt(ctx.params.id);

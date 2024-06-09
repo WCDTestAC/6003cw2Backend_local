@@ -1,9 +1,9 @@
 import Router, {RouterContext} from "koa-router";
 import bodyParser from "koa-bodyparser";
 import * as model from "../models/petinfomodels";
-import * as likes from "../models/likes";
-import * as favs from "../models/favs";
-import * as msgs from "../models/msgs";
+//import * as likes from "../models/likes";
+import * as favs from "../models/favpetmodels";
+import * as msgs from "../models/messagemodels";
 import { validatePetInfo } from "../controllers/validation";
 import { authFunction } from "../controllers/auth";
 
@@ -11,13 +11,11 @@ import { authFunction } from "../controllers/auth";
 interface Post {
   id: number,
   petname: string,
-  alltext:string,
-  summary: string,
+  petsummary:string,
   imageurl: string,
   authorid: number,
   description:string,
   links: {
-    likes: string,
     fav: string,
     msg: string,
     self: string
@@ -33,14 +31,13 @@ const {limit=100, page=1,  order="dateCreated", direction='ASC'} = ctx.request.q
   const result = await model.getAll(20, 1, order, direction);
    if (result.length) {
      const body: Post[] = result.map((post: any) => {
-       const { id = 0, petname = "",  alltext="",summary = "", imageurl = "",authorid = 0,description="" }: Partial<Post> = post;
+       const { id = 0, petname = "",  petsummary="",imageurl = "",authorid = 0,description="" }: Partial<Post> = post;
        const links = {
-         likes: `http://${ctx.host}/api/v1/petinfos/${post.id}/likes`,
          fav: `http://${ctx.host}/api/v1/petinfos/${post.id}/fav`,
          msg: `http://${ctx.host}/api/v1/petinfos/${post.id}/msg`,
          self: `http://${ctx.host}/api/v1/petinfos/${post.id}`
        };
-       return { id, petname, alltext,summary, imageurl,authorid, description, links }; // Utilizing the destructured elements
+       return { id, petname, petsummary,imageurl,authorid, description, links }; // Utilizing the destructured elements
      });
   ctx.body = body;
   
@@ -128,33 +125,33 @@ let petinfo:any = await model.deleteById(id)
 
 
 // methods for like icon
-async function likesCount(ctx: RouterContext, next: any) {
-  // For you TODO: add error handling and error response code
-  const id = ctx.params.id;
-  const result = await likes.count(id);
-  ctx.body = result ? result : 0;
-  await next();
-}
+// async function likesCount(ctx: RouterContext, next: any) {
+//   // For you TODO: add error handling and error response code
+//   const id = ctx.params.id;
+//   const result = await likes.count(id);
+//   ctx.body = result ? result : 0;
+//   await next();
+// }
 
-async function likePost(ctx: RouterContext, next: any) {
-  // For you TODO: add error handling and error response code
-  const user = ctx.state.user;
-  const uid:number =user.user.id;
-  const id = parseInt(ctx.params.id);
-  const result:any = await likes.like(id, uid);
-  ctx.body = result.affectedRows ? {message: "liked",userid:result.userid} : {message: "error"};
-  await next();
-}
+// async function likePost(ctx: RouterContext, next: any) {
+//   // For you TODO: add error handling and error response code
+//   const user = ctx.state.user;
+//   const uid:number =user.user.id;
+//   const id = parseInt(ctx.params.id);
+//   const result:any = await likes.like(id, uid);
+//   ctx.body = result.affectedRows ? {message: "liked",userid:result.userid} : {message: "error"};
+//   await next();
+// }
 
-async function dislikePost(ctx: RouterContext, next: any) {
-  // For you TODO: add error handling and error response code
-  const user = ctx.state.user;
-  const uid:number =user.user.id;
-  const id = parseInt(ctx.params.id);
-  const result:any = await likes.dislike(id, uid);
-  ctx.body = result.affectedRows ? {message: "disliked"} : {message: "error"};
-  await next();
-}
+// async function dislikePost(ctx: RouterContext, next: any) {
+//   // For you TODO: add error handling and error response code
+//   const user = ctx.state.user;
+//   const uid:number =user.user.id;
+//   const id = parseInt(ctx.params.id);
+//   const result:any = await likes.dislike(id, uid);
+//   ctx.body = result.affectedRows ? {message: "disliked"} : {message: "error"};
+//   await next();
+// }
 
 //mehtods for Heart(Favorite) icon
 async function userFav(ctx: RouterContext, next: any) {
@@ -223,9 +220,10 @@ router.post('/', authFunction, bodyParser(), validatePetInfo, createPetrecord);
 router.get('/:id([0-9]{1,})', getById);
 router.put('/:id([0-9]{1,})', authFunction, bodyParser(),validatePetInfo, updatePetrecord);
 router.delete('/:id([0-9]{1,})', authFunction, deletePetrecord);
-router.get('/:id([0-9]{1,})/likes', likesCount);
-router.post('/:id([0-9]{1,})/likes', authFunction, likePost);
-router.del('/:id([0-9]{1,})/likes', authFunction, dislikePost);
+
+// router.get('/:id([0-9]{1,})/likes', likesCount);
+// router.post('/:id([0-9]{1,})/likes', authFunction, likePost);
+// router.del('/:id([0-9]{1,})/likes', authFunction, dislikePost);
 
 router.get('/fav', authFunction, userFav);
 router.post('/:id([0-9]{1,})/fav', authFunction, postFav);

@@ -5,10 +5,10 @@ import json from "koa-json";
 import passport from 'koa-passport';
 import bodyParser from "koa-bodyparser";
 import cors from '@koa/cors' ;
-import { router as articles } from "./routes/articles";
+//import { router as articles } from "./routes/articles";
 import { router as special } from './routes/special';
 import { router as uploads } from './routes/uploads';
-import { router as users } from "./routes/users";
+//import { router as users } from "./routes/users";
 import { router as userslist } from "./routes/userlistRoutes";
 import {router as petinfos} from "./routes/petinfoRoutes";
 
@@ -32,10 +32,10 @@ app.use(json());
 app.use(bodyParser());
 app.use(router.routes());
 app.use(passport.initialize());
-app.use(articles.middleware());
+//app.use(articles.middleware());
 app.use(special.middleware());
 app.use(uploads.middleware());
-app.use(users.middleware());
+//app.use(users.middleware());
 app.use(userslist.middleware());
 app.use(petinfos.middleware());
 

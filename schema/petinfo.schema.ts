@@ -9,21 +9,13 @@ export const petinfo = {
       "description": "The name of the pet",
       "type": "string"
     },
-    "alltext": {
+    "petsummary": {
       "description": "Body text of the pet information",
-      "type": "string"
-    },
-    "summary": {
-      "description": "Optional short text summary to describe the pet",
       "type": "string"
     },
     "imageURL": {
       "description": "URL for show the pet image",
       "type": "uri"
-    },
-    "published": {
-      "description": "Is the article published or not",
-      "type": "boolean"
     },
     "authorid": {
       "description": "User ID of the petinfo author",
@@ -35,5 +27,5 @@ export const petinfo = {
       "type": "string"  
     }        
   },
-  "required": ["petname", "alltext", "authorid"]
+  "required": ["petname", "petsummary", "authorid"]
 }
