@@ -34,11 +34,21 @@ export const deleteMessage = async  (id:any, msg:any)=> {
   let msgObj=JSON.parse(msgtxtin)
   console.log("msgtxtin from msgObje ", msgObj)
   
-  let msgtxt:any=msgObj.messagetxt
-  console.log('in query ', msgtxt)
+//   let msgtxt:any=msgObj.messagetxt
+//   console.log('in query ', msgtxt)
+// let query = "DELETE FROM usermessage WHERE petid=? AND messagetxt=?; ";
+//    try{
+//     await db.run_query(query, [id, msgtxt]);  
+//     return { "affectedRows":1 }
+//   } catch(error) {
+//     return error
+//   }
+
+let messagetxt:any=msgObj.messagetxt
+  console.log('in query ', messagetxt)
 let query = "DELETE FROM usermessage WHERE petid=? AND messagetxt=?; ";
    try{
-    await db.run_query(query, [id, msgtxt]);  
+    await db.run_query(query, [id, messagetxt]);  
     return { "affectedRows":1 }
   } catch(error) {
     return error

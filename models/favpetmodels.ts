@@ -1,9 +1,9 @@
 import * as db from '../helpers/database';
 
 //add a user Favorite
-export const addFav = async (id:any, uid:any) =>{
+export const addFavpet = async (id:any, uid:any) =>{
 //let query1 = `SELECT * FROM favs WHERE  articleid=${id} AND userid=${uid} `
- let query = `INSERT INTO favs (articleid,userid) VALUES (${id},${uid}) ON CONFLICT ON CONSTRAINT  NoDuplicateFav DO NOTHING RETURNING userid;`   
+ let query = `INSERT INTO petfavs (petid,userid) VALUES (${id},${uid}) ON CONFLICT ON CONSTRAINT  noduplicatepetfav DO NOTHING RETURNING userid;`   
  try{
  
    const result:any = await db.run_query(query, [id, uid]);  
@@ -15,13 +15,9 @@ export const addFav = async (id:any, uid:any) =>{
   }
   
 
-
-
-    
-
 //remove a fav record
-export const removeFav = async (id:any, uid:any) =>{
-   let query = `DELETE FROM favs WHERE articleid=${id} AND userid=${uid} ;`;
+export const deleteFavpet = async (id:any, uid:any) =>{
+   let query = `DELETE FROM petfavs WHERE petid=${id} AND userid=${uid} ;`;
    try{
         await db.run_query(query, [id, uid]);  
     return { "affectedRows":1 }
@@ -32,8 +28,8 @@ export const removeFav = async (id:any, uid:any) =>{
 }
 
 //list the fav  article for user
-export const listFav = async (id:any)=> {
-  let query = "SELECT * FROM favs  WHERE userid=?";
+export const listFavpet = async (id:any)=> {
+  let query = "SELECT * FROM petfavs  WHERE userid=?";
    const result = await db.run_query(query, [id]);
   return result;
 }

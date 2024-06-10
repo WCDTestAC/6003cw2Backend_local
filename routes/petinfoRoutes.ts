@@ -158,7 +158,7 @@ async function userFav(ctx: RouterContext, next: any) {
   // For you TODO: add error handling and error response code
   const user = ctx.state.user;
   const uid:number =user.user.id;
-  const result = await favs.listFav(uid);
+  const result = await favs.listFavpet(uid);
   ctx.body = result ? result : 0;
   await next();
 }
@@ -168,7 +168,7 @@ async function postFav(ctx: RouterContext, next: any) {
   const user = ctx.state.user;
   const uid:number =user.user.id;
   const id = parseInt(ctx.params.id);
-  const result:any = await favs.addFav(id, uid);
+  const result:any = await favs.addFavpet(id, uid);
   ctx.body = result.affectedRows ? {message: "added",userid:result.userid} : {message: "error"};
   await next();
 }
@@ -178,7 +178,7 @@ async function rmFav(ctx: RouterContext, next: any) {
   const user = ctx.state.user;
   const uid:number =user.user.id;
   const id = parseInt(ctx.params.id);
-  const result:any = await favs.removeFav(id, uid);
+  const result:any = await favs.deleteFavpet(id, uid);
   ctx.body = result.affectedRows ? {message: "removed"} : {message: "error"};
   await next();
 }
@@ -191,7 +191,7 @@ async function listMsg(ctx: RouterContext, next: any){
   await next();
 }
 
-async function addMsg(ctx: RouterContext, next: any){
+async function addMessage(ctx: RouterContext, next: any){
   const id = parseInt(ctx.params.id);
   const user = ctx.state.user;
   const uid:number =user.user.id;
@@ -230,6 +230,6 @@ router.post('/:id([0-9]{1,})/fav', authFunction, postFav);
 router.del('/:id([0-9]{1,})/fav', authFunction, rmFav);
 
 router.get('/:id([0-9]{1,})/msg', listMsg);
-router.post('/:id([0-9]{1,})/msg', bodyParser(), authFunction, addMsg);
+router.post('/:id([0-9]{1,})/msg', authFunction,bodyParser(),addMessage);
 router.del('/:id([0-9]{1,})/msg', authFunction, bodyParser(),rmMsg);
 export { router };
