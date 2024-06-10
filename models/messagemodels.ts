@@ -1,14 +1,14 @@
 import * as db from '../helpers/database';
 
 //get all Msgs of articled
-export const getMsg= async  (id:any)=> {
+export const getMessage= async  (id:any)=> {
   let query = "SELECT * FROM usermessage WHERE petid=?;";
   const result = await db.run_query(query, [id]);
   return result;
 }
 
 //add a new Msg
-export const add_Msg = async (id:any, uid:any,uname:any,msg:any) =>{
+export const createMessage = async (id:any, uid:any,uname:any,msg:any) =>{
  console.log('body query ', msg)
   let msgtxt=msg.messagetxt;
   console.log ("Message from query ",msgtxt)
@@ -27,7 +27,7 @@ export const add_Msg = async (id:any, uid:any,uname:any,msg:any) =>{
     
 
 //remove a msg record
-export const removeMsg = async  (id:any, msg:any)=> {
+export const deleteMessage = async  (id:any, msg:any)=> {
   console.log('body query ', msg)
   let msgtxtin=msg.source
   console.log("msgtxtin from source ", msgtxtin)

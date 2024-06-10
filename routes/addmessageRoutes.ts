@@ -10,6 +10,6 @@ export async function addMsg(ctx: RouterContext, next: any) {
   let msg = body.messagetxt;
   console.log('ctx.request.body ', ctx.request.body);
   console.log('body.msg ', msg);
-  const result: any = await msgs.add_Msg(id, uid, uname, msg);
+  const result: any = await msgs.createMessage(id, uid, uname, msg);
   ctx.body = result.affectedRows ? { message: "added" } : { message: "error" };
 }

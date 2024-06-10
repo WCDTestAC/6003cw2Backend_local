@@ -186,7 +186,7 @@ async function rmFav(ctx: RouterContext, next: any) {
 //methods for message icon
 async function listMsg(ctx: RouterContext, next: any){
    const id = parseInt(ctx.params.id);
-   const result = await msgs.getMsg(id);
+   const result = await msgs.getMessage(id);
   ctx.body = result ? result : 0;
   await next();
 }
@@ -199,7 +199,7 @@ async function addMsg(ctx: RouterContext, next: any){
   let msg:any = ctx.request.body;
   console.log('ctx.request.body ',ctx.request.body)
   console.log('..msg ',msg)
-  const result:any= await msgs.add_Msg(id, uid,uname, msg);
+  const result:any= await msgs.createMessage(id, uid,uname, msg);
   ctx.body = result.affectedRows ? {message: "added"} : {message: "error"};
   await next();
 }
@@ -210,7 +210,7 @@ async function rmMsg(ctx: RouterContext, next: any){
  let b:any = ctx.request.body;
  
  const id = parseInt(ctx.params.id); 
-  const result:any = await msgs.removeMsg(id, b);
+  const result:any = await msgs.deleteMessage(id, b);
   ctx.body = result.affectedRows ? {message: "removed"} : {message: "error"}; 
   await next();
 }
