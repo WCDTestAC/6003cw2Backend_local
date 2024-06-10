@@ -35,14 +35,11 @@ export const add = async(petinfo: any) => {
 
 export const  update= async(petinfo:any,id:any)  =>{  
     
-  //console.log("petinfo " , petinfo)
- // console.log("id ",id)
   let keys = Object.keys(petinfo)
   let values = Object.values(petinfo)  
   let updateString=""
   for(let i: number = 0; i<values.length;i++){updateString+=keys[i]+"="+"'"+values[i]+"'"+"," }
- updateString= updateString.slice(0, -1)
- // console.log("updateString ", updateString)
+      updateString= updateString.slice(0, -1)
   let query = `UPDATE petinfo SET ${updateString} WHERE ID=${id} RETURNING *;`
   try{
    await db.run_query(query, values)  

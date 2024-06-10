@@ -8,7 +8,7 @@ CREATE TABLE public.petinfo (
 	authorid int4 NULL,
 	description text NULL,
 	CONSTRAINT petinfos_pkey PRIMARY KEY (id),
-  CONSTRAINT fk_petinfo FOREIGN KEY (authorid) REFERENCES users (id)
+  CONSTRAINT fk_petinfo FOREIGN KEY (authorid) REFERENCES userlist (id)
 );
 
 

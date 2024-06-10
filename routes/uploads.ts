@@ -21,14 +21,12 @@ try {
       let type: string | undefined;;
       let extension:string|null;
       if (Array.isArray(upload)) {
-          // Handle if 'upload' is an array of files
           if (upload.length > 0) {
               path = upload[0].filepath;
               name = upload[0].newFilename;
                type = upload[0].mimetype|| ''                   
           }
       } else {
-          // Handle if 'upload' is a single file
           path = upload?.filepath;
           name = upload?.newFilename;
           type = upload?.mimetype|| '';    
@@ -36,17 +34,9 @@ try {
   if (type) {
     extension = mime.extension(type) || null;
   } else {
-    // Handle the case where 'type' is undefined
     extension = null;
   }
-  //const {path, name, type} = ctx.request.files.upload;
-  //const path:string|undefined = ctx.request.files?.upload?.filepath ;
-  //const name:string|undefined = ctx.request.files?.upload?.newFilename 
-  //const type:string |undefined= ctx.request.files?.upload?.mimetype;  
-  //const   extension = mime.extension(type)
 
-// console.log('Uploaded file details: '+JSON.stringify(ctx.request.files))
-// add some logging to help with troubleshooting
       console.log('Uploaded file details:')
       console.log(`path: ${path}`);
       console.log(`filename: ${name}`);
@@ -64,8 +54,7 @@ try {
       filename: name,
       type: type,
       extension: extension,
-        links: {//`https://${ctx.host}${prefix}/${path}`
-
+        links: {
             path: `http://${ctx.host}${router.url('get_image', imageName)}`
           }
 
@@ -81,8 +70,6 @@ router.get('get_image', '/images/:uuid([0-9a-f\\-]{36})', async (ctx: RouterCont
   const path = `${fileStore}/${uuid}`;
   console.log('client requested image with path', path);
   try {
-
-    // find the requested file and return it
       if (existsSync(path)) {
         
           console.log('image found');

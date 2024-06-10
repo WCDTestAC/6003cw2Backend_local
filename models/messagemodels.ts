@@ -1,13 +1,11 @@
 import * as db from '../helpers/database';
 
-//get all Msgs of articled
 export const getMessage= async  (id:any)=> {
   let query = "SELECT * FROM usermessage WHERE petid=?;";
   const result = await db.run_query(query, [id]);
   return result;
 }
 
-//add a new Msg
 export const createMessage = async (id:any, uid:any,uname:any,msg:any) =>{
  console.log('body query ', msg)
   let msgtxt=msg.messagetxt;
@@ -22,27 +20,13 @@ export const createMessage = async (id:any, uid:any,uname:any,msg:any) =>{
   }
   
 }
-
-
-    
-
-//remove a msg record
+   
 export const deleteMessage = async  (id:any, msg:any)=> {
   console.log('body query ', msg)
   let msgtxtin=msg.source
   console.log("msgtxtin from source ", msgtxtin)
   let msgObj=JSON.parse(msgtxtin)
   console.log("msgtxtin from msgObje ", msgObj)
-  
-//   let msgtxt:any=msgObj.messagetxt
-//   console.log('in query ', msgtxt)
-// let query = "DELETE FROM usermessage WHERE petid=? AND messagetxt=?; ";
-//    try{
-//     await db.run_query(query, [id, msgtxt]);  
-//     return { "affectedRows":1 }
-//   } catch(error) {
-//     return error
-//   }
 
 let messagetxt:any=msgObj.messagetxt
   console.log('in query ', messagetxt)

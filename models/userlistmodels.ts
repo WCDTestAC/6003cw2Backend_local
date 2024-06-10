@@ -8,7 +8,6 @@ export const getAllUser = async  (limit=10, page=1) =>{
 }
 
 export const searchUser = async  (sfield:any,q:any) =>{
-//  const query = `SELECT ${sfield} FROM userlist WHERE ${sfield} LIKE '%${q}%' `;
 const query = `SELECT ${sfield} FROM userlist WHERE ${sfield} LIKE '%${q}%' `;
 
  try{ const data = await db.run_query(query,null);
@@ -49,14 +48,11 @@ export const findByUsername = async (username: string) => {
 
 export const  updateUser= async(user:any,id:any)  =>{  
 
-  //console.log("user " , user)
- // console.log("id ",id)
   let keys = Object.keys(user)
   let values = Object.values(user)  
   let updateString=""
   for(let i: number = 0; i<values.length;i++){updateString+=keys[i]+"="+"'"+values[i]+"'"+"," }
  updateString= updateString.slice(0, -1)
- // console.log("updateString ", updateString)
   let query = `UPDATE userlist SET ${updateString} WHERE ID=${id} RETURNING *;`
   try{
    await db.run_query(query, values)  
