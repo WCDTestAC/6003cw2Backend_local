@@ -8,7 +8,9 @@ export const getAllUser = async  (limit=10, page=1) =>{
 }
 
 export const searchUser = async  (sfield:any,q:any) =>{
- const query = `SELECT ${sfield} FROM userlist WHERE ${sfield} LIKE '%${q}%' `;
+//  const query = `SELECT ${sfield} FROM userlist WHERE ${sfield} LIKE '%${q}%' `;
+const query = `SELECT ${sfield} FROM userlist WHERE ${sfield} LIKE '%${q}%' `;
+
  try{ const data = await db.run_query(query,null);
   return data;}
   catch(error) {
