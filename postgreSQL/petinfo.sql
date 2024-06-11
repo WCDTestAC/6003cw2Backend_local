@@ -13,7 +13,7 @@ CREATE TABLE public.petinfo (
 
 
 INSERT INTO petinfo (petname, petsummary, imageurl, authorid, description) VALUES
-	('title 1', 'some stuff','http://localhost:10889/api/v1/images/70332330-2744-4013-8752-048045222afd',	 1,'The selection process was fair for the Panel of Judges led by Professor Ir CY CHENG in view of the distinctive achievements of individual candidates.'),
-	('another title', 'interesting','http://localhost:10889/api/v1/images/d3abd3a9-1af4-4baa-a0d6-fe75df2627f1',	 4,'The selection process was fair for the Panel of Judges led by Professor Ir CY CHENG in view of the distinctive achievements of individual candidates.'),
-	('last one', 'ok','http://localhost:10889/api/v1/images/2e308af4-625e-41b2-904a-fe73fd07ff28',	 1,'The selection process was fair for the Panel of Judges led by Professor Ir CY CHENG in view of the distinctive achievements of individual candidates.' ),
-	('this title is good', 'some text', 'http://localhost:10889/api/v1/images/c9cc3159-ed87-4109-a918-d6964c04784e	',	4,'The selection process was fair for the Panel of Judges led by Professor Ir CY CHENG in view of the distinctive achievements of individual candidates.');
+	('Dog 1', 'Cute','http://localhost:10889/api/v1/images/1ae71b24-aa89-4b34-9c0c-340611102845',	 1,'Is m.'),
+	('Dog2', 'cute','http://localhost:10889/api/v1/images/6e1d728a-b918-45d0-a6b1-6f58a0532c72',	 4,'Is fm.'),
+	('Dog three', 'Very cute','http://localhost:10889/api/v1/images/695f886b-8116-4fde-a99f-e28566a5dcbf',1,'Strong.' ),
+	('Dog IV', 'ccccute', 'http://localhost:10889/api/v1/images/524a51fe-1dce-4994-b750-91eba3f0d7e1',	4,'Week.');
