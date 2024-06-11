@@ -1,43 +1,35 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "definitions": {
-    "article": {
-      "id": "/article",
-      "title": "Article",
-      "description": "An article in the blog",
+    "petinfo": {
+      "id": "/petinfos",
+      "title": "Petinfo",
+      "description": "An pet information in the blog",
       "type": "object",
       "properties": {
-        "title": {
-          "description": "Main title of the blog article",
+        "petname": {
+          "description": "Pet name of the blog petinfo",
           "type": "string"
         },
-        "alltext": {
-          "description": "Body text",
-          "type": "string"
-        },
-        "summary": {
-          "description": "Optional short text summary of article",
+        "petsummary": {
+          "description": "Simple description of the pet",
           "type": "string"
         },
         "imageurl": {
-          "description": "URL for main image to show in article",
+          "description": "URL for main image to show the pet ",
           "type": "uri"
         },
-        "published": {
-          "description": "Is the article published or not",
-          "type": "boolean"
-        },
         "authorid": {
-          "description": "User ID of the article author",
+          "description": "User ID of the pet record author",
           "type": "integer",
           "minimum": 0
         },
         "description": {
-          "description": "description of articles in more details",
+          "description": "detail description for the pet",
           "type": "string"  
         }        
       },
-      "required": ["title", "alltext", "authorid"]
+      "required": ["petname", "petsummary", "authorid"]
     }
   }
 }
