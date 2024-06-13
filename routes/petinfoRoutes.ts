@@ -87,7 +87,6 @@ let petinfo:any = await model.deleteById(id)
   await next();
 }
 
-//mehtods for Heart(Favorite) icon
 async function userFav(ctx: RouterContext, next: any) {
   const user = ctx.state.user;
   const uid:number =user.user.id;
