@@ -8,11 +8,11 @@ const upload_options= {
     formidable: { uploadDir: './img' }
 };
 
-const koaBodyM = koaBody(upload_options);
+const kBM = koaBody(upload_options);
 const fileStore:string= './img';
 const router:Router = new Router({ prefix:'/api/v1'});
 
-router.post('/images', koaBodyM, async (ctx: RouterContext, next: any) =>
+router.post('/images', kBM, async (ctx: RouterContext, next: any) =>
 {
 try {   
       const upload = ctx.request.files?.upload;

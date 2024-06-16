@@ -5,7 +5,7 @@ import json from "koa-json";
 import passport from 'koa-passport';
 import bodyParser from "koa-bodyparser";
 import cors from '@koa/cors' ;
-import { router as uploads } from './routes/uploads';
+import { router as uploadImg } from './routes/uploadImg';
 import { router as userslist } from "./routes/userlistRoutes";
 import {router as petinfos} from "./routes/petinfoRoutes";
 
@@ -21,7 +21,7 @@ app.use(json());
 app.use(bodyParser());
 app.use(router.routes());
 app.use(passport.initialize());
-app.use(uploads.middleware());
+app.use(uploadImg.middleware());
 app.use(userslist.middleware());
 app.use(petinfos.middleware());
 
